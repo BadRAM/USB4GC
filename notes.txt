@@ -1,0 +1,56 @@
+Dell Keyboard:
+
+20:01:48.337 -> 
+20:01:48.337 -> 
+20:01:48.337 -> 01
+20:01:48.337 -> --
+20:01:48.337 -> 
+20:01:48.337 -> Device descriptor: 
+20:01:48.337 -> Descriptor Length:	12
+20:01:48.337 -> Descriptor type:	01
+20:01:48.337 -> USB version:		0110
+20:01:48.337 -> Device class:		00
+20:01:48.337 -> Device Subclass:	00
+20:01:48.337 -> Device Protocol:	00
+20:01:48.337 -> Max.packet size:	08
+20:01:48.337 -> Vendor  ID:		413C
+20:01:48.337 -> Product ID:		2003
+20:01:48.337 -> Revision ID:		0306
+20:01:48.337 -> Mfg.string index:	01
+20:01:48.337 -> Prod.string index:	02
+20:01:48.337 -> Serial number index:	00
+20:01:48.376 -> Number of conf.:	01
+20:01:48.376 -> 
+20:01:48.376 -> Configuration descriptor:
+20:01:48.376 -> Total length:		0022
+20:01:48.376 -> Num.intf:		01
+20:01:48.376 -> Conf.value:		01
+20:01:48.376 -> Conf.string:		00
+20:01:48.376 -> Attr.:			A0
+20:01:48.376 -> Max.pwr:		23
+20:01:48.376 -> 
+20:01:48.376 -> Interface descriptor:
+20:01:48.376 -> Intf.number:		00
+20:01:48.376 -> Alt.:			00
+20:01:48.376 -> Endpoints:		01
+20:01:48.376 -> Intf. Class:		03
+20:01:48.376 -> Intf. Subclass:		01
+20:01:48.376 -> Intf. Protocol:		01
+20:01:48.376 -> Intf.string:		00
+20:01:48.376 -> 
+20:01:48.376 -> HID Descriptor:
+20:01:48.376 -> HID Class Release:	0110
+20:01:48.376 -> Country Code:		00
+20:01:48.376 -> Numb Class Descriptor:	01
+20:01:48.376 -> Descriptor Type:	REPORT DESCRIPTOR
+20:01:48.376 -> CSize Report Descr:	0041
+20:01:48.376 -> 
+20:01:48.376 -> Endpoint descriptor:
+20:01:48.376 -> Endpoint address:	IN		01
+20:01:48.417 -> Attr.:			INTERRUPT	03
+20:01:48.417 -> Max.pkt size:		0008
+20:01:48.417 -> Polling interval:	18
+20:01:48.417 -> 
+20:01:48.417 -> 
+20:01:48.417 -> Addr:1(0.0.1)
+
