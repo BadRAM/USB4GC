@@ -3,14 +3,12 @@
 #include <XBOXONE.h>
 #include <PS3USB.h>
 #include <PS4USB.h>
-#include <KeyboardController.h>
 
 USBHost UsbH;
 XBOXUSB XboxUSB(&UsbH);
 XBOXONE XboxONE(&UsbH);
 PS3USB PS3(&UsbH);
 PS4USB PS4(&UsbH);
-KeyboardController keyboard(UsbH);
 
 
 // Config Variables:
