@@ -1,35 +1,26 @@
-#include <main.h>
+#include <Arduino.h>
+#include <XBOXUSB.h>
+#include <XBOXONE.h>
+#include <PS3USB.h>
+#include <PS4USB.h>
 
 USBHost UsbH;
 XBOXUSB XboxUSB(&UsbH);
 XBOXONE XboxONE(&UsbH);
 PS3USB PS3(&UsbH);
 PS4USB PS4(&UsbH);
-KeyboardController keyboard(UsbH);
-
-keebBindingsMap keebmap;
-BindingsMap Xbox360Map;
-BindingsMap XboxOneMap;
-BindingsMap PS3Map;
-BindingsMap PS4Map;
-
-// FlashStorage(keebconfig, keebBindingsMap);
-// FlashStorage(Xbox360Config, BindingsMap);
-// FlashStorage(XboxOneConfig, BindingsMap);
-// FlashStorage(PS3Config, BindingsMap);
-// FlashStorage(PS4Config, BindingsMap);
 
 
 // Config Variables:
 
 // this pin drives a debug LED
-const int LEDPin = 13;
+int LEDPin = 13;
 
 // wait this many ms after the last SI poll command before polling the USB
-const int PollDelay = 4;
+int PollDelay = 4;
 
 // wait this many ms after USB polling to poll USB again, if there is no SI poll.
-const int PollFreq = 100;
+int PollFreq = 100;
 
 // --------
 
@@ -37,39 +28,17 @@ byte incomingByte = 0;
 uint32_t recvBuffer = 0;
 bool timeOfLastProbe = 0;
 bool isTX = false;
-bool keebMode = false; // This is true when the adapter is in keyboard mode.
-bool modX = false;
-bool modY = false;
+bool AButtonDown = false;
 
 unsigned long lastPoll = 0; // this is the millis() of the last time the console polled for input data.
 
 byte data[8];
 byte databuf[8];
-byte keebdata[8] = {0x00, 0x80, 0x80, 0x80, 0x80, 0x80, 0x00, 0x00};
-//const byte neutral[8] = {0x00, 0x80, 0x80, 0x80, 0x80, 0x80, 0x00, 0x00};
 
-// This function intercepts key press
-void keyPressed() {
-  keebMode = true;
-  uint8_t key = keyboard.getOemKey();
-
-  if (key == keebmap.A)
-  {
-    keebdata[0] |= 0b00000001;
-  }
-  
-}
-
-// This function intercepts key release
-void keyReleased() {
-  keebMode = true;
-  uint8_t key = keyboard.getOemKey();
-
-  if (key == keebmap.A)
-  {
-    keebdata[0] &= 0b11111110;
-  }
-}
+//enum SIQuery
+//{
+//  probe = 0b00000000
+//}
 
 // Update data[] by polling the connected USB device.
 // This function is too slow to run in between receiving the poll command and 
@@ -78,36 +47,37 @@ void pollUSB()
 {
   UsbH.Task();
 
+
   // If chain tests until it finds a match for the connected controller
   if (XboxUSB.Xbox360Connected)
   {
     // This is the Xbox 360 Wired controller. The wireless controller is not supported.
     databuf[0] = 0x00;
-    databuf[0] |= XboxUSB.getButtonPress(Xbox360Map.A);
-    databuf[0] |= XboxUSB.getButtonPress(Xbox360Map.B) << 1;
-    databuf[0] |= XboxUSB.getButtonPress(Xbox360Map.X) << 2;
-    databuf[0] |= XboxUSB.getButtonPress(Xbox360Map.Y) << 3;
-    databuf[0] |= XboxUSB.getButtonPress(Xbox360Map.START) << 4;
+    databuf[0] |= XboxUSB.getButtonPress(A);
+    databuf[0] |= XboxUSB.getButtonPress(B) << 1;
+    databuf[0] |= XboxUSB.getButtonPress(X) << 2;
+    databuf[0] |= XboxUSB.getButtonPress(Y) << 3;
+    databuf[0] |= XboxUSB.getButtonPress(START) << 4;
   
     databuf[1] = 0b10000000;
-    databuf[1] |= XboxUSB.getButtonPress(Xbox360Map.DPADLEFT);
-    databuf[1] |= XboxUSB.getButtonPress(Xbox360Map.DPADRIGHT) << 1;
-    databuf[1] |= XboxUSB.getButtonPress(Xbox360Map.DPADDOWN) << 2;
-    databuf[1] |= XboxUSB.getButtonPress(Xbox360Map.DPADUP) << 3;
-    databuf[1] |= XboxUSB.getButtonPress(Xbox360Map.Z) << 4;
+    databuf[1] |= XboxUSB.getButtonPress(LEFT);
+    databuf[1] |= XboxUSB.getButtonPress(RIGHT) << 1;
+    databuf[1] |= XboxUSB.getButtonPress(DOWN) << 2;
+    databuf[1] |= XboxUSB.getButtonPress(UP) << 3;
+    databuf[1] |= XboxUSB.getButtonPress(R1) << 4;
     // This controller doesn't have dual stage triggers, so we press L/R above 250/255
-    databuf[1] |= (XboxUSB.getButtonPress(Xbox360Map.ANALOG_R) > Xbox360Map.DIGITAL_R) << 5;
-    databuf[1] |= (XboxUSB.getButtonPress(Xbox360Map.ANALOG_L) > Xbox360Map.DIGITAL_L) << 6;
+    databuf[1] |= (XboxUSB.getButtonPress(R2) > 250) << 5;
+    databuf[1] |= (XboxUSB.getButtonPress(L2) > 250) << 6;
 
     // The library returns the stick position as a 16 bit signed int, centered at zero, so we must convert to byte
-    databuf[2] = XboxUSB.getAnalogHat(Xbox360Map.CONTROLSTICK_X) / 256 + 128;
-    databuf[3] = XboxUSB.getAnalogHat(Xbox360Map.CONTROLSTICK_Y) / 256 + 128;
-    databuf[4] = XboxUSB.getAnalogHat(Xbox360Map.CSTICK_X) / 256 + 128;
-    databuf[5] = XboxUSB.getAnalogHat(Xbox360Map.CSTICK_Y) / 256 + 128;
+    databuf[2] = XboxUSB.getAnalogHat(LeftHatX) / 256 + 128;
+    databuf[3] = XboxUSB.getAnalogHat(LeftHatY) / 256 + 128;
+    databuf[4] = XboxUSB.getAnalogHat(RightHatX) / 256 + 128;
+    databuf[5] = XboxUSB.getAnalogHat(RightHatY) / 256 + 128;
 
     // L2 and R2 are bytes for some reason.
-    databuf[6] = XboxUSB.getButtonPress(Xbox360Map.ANALOG_L);
-    databuf[7] = XboxUSB.getButtonPress(Xbox360Map.ANALOG_R);
+    databuf[6] = XboxUSB.getButtonPress(L2);
+    databuf[7] = XboxUSB.getButtonPress(R2);
   }
   else if (XboxONE.XboxOneConnected)
   {
@@ -191,21 +161,8 @@ void pollUSB()
     databuf[6] = PS4.getAnalogButton(L2);
     databuf[7] = PS4.getAnalogButton(R2);
   }
-  else if (keebMode) // send keyboard inputs.
+  else // set to neutral if no controller recognized
   {
-    digitalWrite(LEDPin, HIGH);
-    databuf[0] = keebdata[0];
-    databuf[1] = keebdata[1];
-    databuf[2] = keebdata[2];
-    databuf[3] = keebdata[3];
-    databuf[4] = keebdata[4];
-    databuf[5] = keebdata[5];
-    databuf[6] = keebdata[6];
-    databuf[7] = keebdata[7];
-  }
-  else // send neutral inputs
-  {
-    digitalWrite(LEDPin, LOW);
     databuf[0] = 0x00;
     databuf[1] = 0x80;
     databuf[2] = 0x80;
@@ -226,22 +183,21 @@ void pollUSB()
   data[6] = databuf[6];
   data[7] = databuf[7];
 
-  // Turn the LED off if any analog input is at a limit.
-  // if (data[2] == 0 ||
-  //   data[2] == 255 ||
-  //   data[3] == 0 ||
-  //   data[3] == 255 ||
-  //   data[4] == 0 ||
-  //   data[4] == 255 ||
-  //   data[5] == 0 ||
-  //   data[5] == 255)
-  // {
-  //   digitalWrite(LEDPin, HIGH);
-  // }
-  // else
-  // {
-  //   digitalWrite(LEDPin, LOW);
-  // }
+  if (data[2] == 0 ||
+    data[2] == 255 ||
+    data[3] == 0 ||
+    data[3] == 255 ||
+    data[4] == 0 ||
+    data[4] == 255 ||
+    data[5] == 0 ||
+    data[5] == 255)
+  {
+    digitalWrite(LEDPin, HIGH);
+  }
+  else
+  {
+    digitalWrite(LEDPin, LOW);
+  }
 }
 
 byte SI6To2(byte six)
@@ -302,13 +258,6 @@ void pollResponse()
 
 void setup() {
   Serial1.begin(800000, SERIAL_6N1);
-
-  // if (Xbox360Config.read() == 0)
-  // {
-  //   Xbox360Config.write(Xbox360Map);
-  // }
-  
-  
 
   pinMode(LEDPin, OUTPUT);    
 
