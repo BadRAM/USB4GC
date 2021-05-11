@@ -5,7 +5,9 @@ XBOXUSB XboxUSB(&UsbH);
 XBOXONE XboxONE(&UsbH);
 PS3USB PS3(&UsbH);
 PS4USB PS4(&UsbH);
-KeyboardController keyboard(UsbH);
+
+USBHost keebH;
+KeyboardController keyboard(keebH);
 
 keebBindingsMap keebmap;
 BindingsMap Xbox360Map;
@@ -38,8 +40,20 @@ uint32_t recvBuffer = 0;
 bool timeOfLastProbe = 0;
 bool isTX = false;
 bool keebMode = false; // This is true when the adapter is in keyboard mode.
+
+bool control_up = false;
+bool control_down = false;
+bool control_left = false;
+bool control_right = false;
+bool c_up = false;
+bool c_down = false;
+bool c_left = false;
+bool c_right = false;
 bool modX = false;
 bool modY = false;
+bool ls1 = false;
+bool ls2 = false;
+
 
 unsigned long lastPoll = 0; // this is the millis() of the last time the console polled for input data.
 
@@ -57,7 +71,156 @@ void keyPressed() {
   {
     keebdata[0] |= 0b00000001;
   }
-  
+  else if (key == keebmap.B)
+  {
+    keebdata[0] |= 0b00000010;
+  }
+  else if (key == keebmap.X)
+  {
+    keebdata[0] |= 0b00000100;
+  }
+  else if (key == keebmap.Y)
+  {
+    keebdata[0] |= 0b00001000;
+  }
+  else if (key == keebmap.START)
+  {
+    keebdata[0] |= 0b00000001;
+  }
+  else if (key == keebmap.Z)
+  {
+    keebdata[1] |= 0b00010000;
+  }
+  else if (key == keebmap.L)
+  {
+    keebdata[1] |= 0b01000000;
+    keebdata[6] = 255;
+  }
+  else if (key == keebmap.R)
+  {
+    keebdata[1] |= 0b00100000;
+    keebdata[7] = 255;
+  }
+  else if (key == keebmap.DPADUP)
+  {
+    keebdata[1] |= 0b00001000;
+  }
+  else if (key == keebmap.DPADDOWN)
+  {
+    keebdata[1] |= 0b00000100;
+  }
+  else if (key == keebmap.DPADRIGHT)
+  {
+    keebdata[1] |= 0b00000010;
+  }
+  else if (key == keebmap.DPADLEFT)
+  {
+    keebdata[1] |= 0b00000001;
+  }
+  else if (key == keebmap.CONTROLSTICK_UP)
+  {
+    if (modY && !modX)
+    {
+      keebdata[3] = 170;
+    }
+    else
+    {
+      keebdata[3] = 255;
+    }
+    
+    control_up = true;
+    control_down = false;
+  }
+  else if (key == keebmap.CONTROLSTICK_DOWN)
+  {
+    if (modY && !modX)
+    {
+      keebdata[3] = 86;
+    }
+    else
+    {
+      keebdata[3] = 0;
+    }
+
+    control_down = true;
+    control_up = false;
+  }
+  else if (key == keebmap.CONTROLSTICK_LEFT)
+  {
+    if (modY && !modX)
+    {
+      keebdata[2] = 86;
+    }
+    else if (modX)
+    {
+      keebdata[2] = 44;
+    }
+    else
+    {
+      keebdata[2] = 0;
+    }
+    control_left = true;
+    control_right = false;
+  }
+  else if (key == keebmap.CONTROLSTICK_RIGHT)
+  {
+    if (modY && !modX)
+    {
+      keebdata[2] = 170;
+    }
+    else if (modX)
+    {
+      keebdata[2] = 212;
+    }
+    else
+    {
+      keebdata[2] = 255;
+    }
+    control_right = true;
+    control_left = false;
+  }
+  else if (key == keebmap.CSTICK_UP)
+  {
+    keebdata[5] = 255;
+    c_up = true;
+    c_down = false;
+  }
+  else if (key == keebmap.CSTICK_DOWN)
+  {
+    keebdata[5] = 0;
+    c_down = true;
+    c_up = false;
+  }
+  else if (key == keebmap.CSTICK_LEFT)
+  {
+    keebdata[4] = 0;
+    c_left = true;
+    c_right = false;
+  }
+  else if (key == keebmap.CSTICK_RIGHT)
+  {
+    keebdata[4] = 255;
+    c_right = true;
+    c_left = false;
+  }
+  else if (key == keebmap.MODX)
+  {
+    modX = true;
+  }
+  else if (key == keebmap.MODY)
+  {
+    modY = true;
+  }
+  else if (key == keebmap.LS1)
+  {
+    keebdata[6] = 60;
+    ls1 = true;
+  }
+  else if (key == keebmap.LS2)
+  {
+    keebdata[6] = 180;
+    ls2 = true;
+  }
 }
 
 // This function intercepts key release
@@ -69,6 +232,134 @@ void keyReleased() {
   {
     keebdata[0] &= 0b11111110;
   }
+  else if (key == keebmap.B)
+  {
+    keebdata[0] &= 0b11111101;
+  }
+  else if (key == keebmap.X)
+  {
+    keebdata[0] &= 0b11111011;
+  }
+  else if (key == keebmap.Y)
+  {
+    keebdata[0] &= 0b11110111;
+  }
+  else if (key == keebmap.START)
+  {
+    keebdata[0] &= 0b11111110;
+  }
+  else if (key == keebmap.Z)
+  {
+    keebdata[1] &= 0b11101111;
+  }
+  else if (key == keebmap.L)
+  {
+    keebdata[1] &= 0b10111111;
+    keebdata[6] = 0;
+  }
+  else if (key == keebmap.R)
+  {
+    keebdata[1] &= 0b11011111;
+    keebdata[7] = 0;
+  }
+  else if (key == keebmap.DPADUP)
+  {
+    keebdata[1] &= 0b11110111;
+  }
+  else if (key == keebmap.DPADDOWN)
+  {
+    keebdata[1] &= 0b11111011;
+  }
+  else if (key == keebmap.DPADRIGHT)
+  {
+    keebdata[1] &= 0b11111101;
+  }
+  else if (key == keebmap.DPADLEFT)
+  {
+    keebdata[1] &= 0b11111110;
+  }
+  else if (key == keebmap.CONTROLSTICK_UP)
+  {
+    if (!control_down)
+    {
+      keebdata[3] = 128;
+    }
+    control_up = false;
+  }
+  else if (key == keebmap.CONTROLSTICK_DOWN)
+  {
+    if (!control_up)
+    {
+      keebdata[3] = 128;
+    }
+    control_down = false;
+  }
+  else if (key == keebmap.CONTROLSTICK_LEFT)
+  {
+    if (!control_right)
+    {
+      keebdata[2] = 128;
+    }
+    control_left = false;
+  }
+  else if (key == keebmap.CONTROLSTICK_RIGHT)
+  {
+    if (!control_left)
+    {
+      keebdata[2] = 128;
+    }
+    control_right = false;
+  }
+  else if (key == keebmap.CSTICK_UP)
+  {
+    if (!c_down)
+    {
+      keebdata[5] = 128;
+    }
+    c_up = false;
+  }
+  else if (key == keebmap.CSTICK_DOWN)
+  {
+    if (!c_up)
+    {
+      keebdata[5] = 128;
+    }
+    c_down = false;
+  }
+  else if (key == keebmap.CSTICK_LEFT)
+  {
+    if (!c_right)
+    {
+      keebdata[4] = 128;
+    }
+    c_left = false;
+  }
+  else if (key == keebmap.CSTICK_RIGHT)
+  {
+    if (!c_left)
+    {
+      keebdata[4] = 128;
+    }
+    c_right = false;
+  }
+  else if (key == keebmap.MODX)
+  {
+    modX = false;
+  }
+  else if (key == keebmap.MODY)
+  {
+    modY = false;
+  }
+  else if (key == keebmap.LS1)
+  {
+    keebdata[2] = 0;
+    ls1 = false;
+  }
+  else if (key == keebmap.LS2)
+  {
+    keebdata[2] = 0;
+    ls2 = false;
+  }
 }
 
 // Update data[] by polling the connected USB device.
@@ -77,6 +368,7 @@ void keyReleased() {
 void pollUSB() 
 {
   UsbH.Task();
+  keebH.Task();
 
   // If chain tests until it finds a match for the connected controller
   if (XboxUSB.Xbox360Connected)
@@ -216,7 +508,7 @@ void pollUSB()
     databuf[7] = 0x00;
   }
 
-  // This layer of isolation is not necessary right now, but could be if interrupts are used someday.
+  // This layer of isolation is not necessary right now, but could be if interrupts or multithreading are used someday.
   data[0] = databuf[0];
   data[1] = databuf[1];
   data[2] = databuf[2];
