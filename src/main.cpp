@@ -1,4 +1,8 @@
-#include <main.h>
+#include <Arduino.h>
+#include <XBOXUSB.h>
+#include <XBOXONE.h>
+#include <PS3USB.h>
+#include <PS4USB.h>
 
 USBHost UsbH;
 XBOXUSB XboxUSB(&UsbH);
@@ -25,13 +29,15 @@ BindingsMap PS4Map;
 // Config Variables:
 
 // this pin drives a debug LED
-const int LEDPin = 13;
+int LEDPin = 13;
+// this pin can be logic analyzed for high speed status reporting
+int DebugPin = 8;
 
 // wait this many ms after the last SI poll command before polling the USB
-const int PollDelay = 4;
+uint16_t PollDelay = 3;
 
-// wait this many ms after USB polling to poll USB again, if there is no SI poll.
-const int PollFreq = 100;
+// // wait this many ms after USB polling to poll USB again, if there is no SI poll.
+// int PollFreq = 50;
 
 // --------
 
@@ -55,7 +61,7 @@ bool ls1 = false;
 bool ls2 = false;
 
 
-unsigned long lastPoll = 0; // this is the millis() of the last time the console polled for input data.
+unsigned long lastPoll = 0; // this is the millis() of the last time we polled the usb
 
 byte data[8];
 byte databuf[8];
@@ -367,6 +373,8 @@ void keyReleased() {
 // sending the response, so it needs to be timed in between SI polls
 void pollUSB() 
 {
+  digitalWrite(DebugPin, HIGH);
+
   UsbH.Task();
   keebH.Task();
 
@@ -375,31 +383,31 @@ void pollUSB()
   {
     // This is the Xbox 360 Wired controller. The wireless controller is not supported.
     databuf[0] = 0x00;
-    databuf[0] |= XboxUSB.getButtonPress(Xbox360Map.A);
-    databuf[0] |= XboxUSB.getButtonPress(Xbox360Map.B) << 1;
-    databuf[0] |= XboxUSB.getButtonPress(Xbox360Map.X) << 2;
-    databuf[0] |= XboxUSB.getButtonPress(Xbox360Map.Y) << 3;
-    databuf[0] |= XboxUSB.getButtonPress(Xbox360Map.START) << 4;
+    databuf[0] |= XboxUSB.getButtonPress(A);
+    databuf[0] |= XboxUSB.getButtonPress(B) << 1;
+    databuf[0] |= XboxUSB.getButtonPress(X) << 2;
+    databuf[0] |= XboxUSB.getButtonPress(Y) << 3;
+    databuf[0] |= XboxUSB.getButtonPress(START) << 4;
   
     databuf[1] = 0b10000000;
-    databuf[1] |= XboxUSB.getButtonPress(Xbox360Map.DPADLEFT);
-    databuf[1] |= XboxUSB.getButtonPress(Xbox360Map.DPADRIGHT) << 1;
-    databuf[1] |= XboxUSB.getButtonPress(Xbox360Map.DPADDOWN) << 2;
-    databuf[1] |= XboxUSB.getButtonPress(Xbox360Map.DPADUP) << 3;
-    databuf[1] |= XboxUSB.getButtonPress(Xbox360Map.Z) << 4;
+    databuf[1] |= XboxUSB.getButtonPress(LEFT);
+    databuf[1] |= XboxUSB.getButtonPress(RIGHT) << 1;
+    databuf[1] |= XboxUSB.getButtonPress(DOWN) << 2;
+    databuf[1] |= XboxUSB.getButtonPress(UP) << 3;
+    databuf[1] |= XboxUSB.getButtonPress(R1) << 4;
     // This controller doesn't have dual stage triggers, so we press L/R above 250/255
-    databuf[1] |= (XboxUSB.getButtonPress(Xbox360Map.ANALOG_R) > Xbox360Map.DIGITAL_R) << 5;
-    databuf[1] |= (XboxUSB.getButtonPress(Xbox360Map.ANALOG_L) > Xbox360Map.DIGITAL_L) << 6;
+    databuf[1] |= (XboxUSB.getButtonPress(R2) > 250) << 5;
+    databuf[1] |= (XboxUSB.getButtonPress(L2) > 250) << 6;
 
     // The library returns the stick position as a 16 bit signed int, centered at zero, so we must convert to byte
-    databuf[2] = XboxUSB.getAnalogHat(Xbox360Map.CONTROLSTICK_X) / 256 + 128;
-    databuf[3] = XboxUSB.getAnalogHat(Xbox360Map.CONTROLSTICK_Y) / 256 + 128;
-    databuf[4] = XboxUSB.getAnalogHat(Xbox360Map.CSTICK_X) / 256 + 128;
-    databuf[5] = XboxUSB.getAnalogHat(Xbox360Map.CSTICK_Y) / 256 + 128;
+    databuf[2] = XboxUSB.getAnalogHat(LeftHatX) / 256 + 128;
+    databuf[3] = XboxUSB.getAnalogHat(LeftHatY) / 256 + 128;
+    databuf[4] = XboxUSB.getAnalogHat(RightHatX) / 256 + 128;
+    databuf[5] = XboxUSB.getAnalogHat(RightHatY) / 256 + 128;
 
     // L2 and R2 are bytes for some reason.
-    databuf[6] = XboxUSB.getButtonPress(Xbox360Map.ANALOG_L);
-    databuf[7] = XboxUSB.getButtonPress(Xbox360Map.ANALOG_R);
+    databuf[6] = XboxUSB.getButtonPress(L2);
+    databuf[7] = XboxUSB.getButtonPress(R2);
   }
   else if (XboxONE.XboxOneConnected)
   {
@@ -483,21 +491,8 @@ void pollUSB()
     databuf[6] = PS4.getAnalogButton(L2);
     databuf[7] = PS4.getAnalogButton(R2);
   }
-  else if (keebMode) // send keyboard inputs.
+  else // set to neutral if no controller recognized
   {
-    digitalWrite(LEDPin, HIGH);
-    databuf[0] = keebdata[0];
-    databuf[1] = keebdata[1];
-    databuf[2] = keebdata[2];
-    databuf[3] = keebdata[3];
-    databuf[4] = keebdata[4];
-    databuf[5] = keebdata[5];
-    databuf[6] = keebdata[6];
-    databuf[7] = keebdata[7];
-  }
-  else // send neutral inputs
-  {
-    digitalWrite(LEDPin, LOW);
     databuf[0] = 0x00;
     databuf[1] = 0x80;
     databuf[2] = 0x80;
@@ -518,22 +513,24 @@ void pollUSB()
   data[6] = databuf[6];
   data[7] = databuf[7];
 
-  // Turn the LED off if any analog input is at a limit.
-  // if (data[2] == 0 ||
-  //   data[2] == 255 ||
-  //   data[3] == 0 ||
-  //   data[3] == 255 ||
-  //   data[4] == 0 ||
-  //   data[4] == 255 ||
-  //   data[5] == 0 ||
-  //   data[5] == 255)
-  // {
-  //   digitalWrite(LEDPin, HIGH);
-  // }
-  // else
-  // {
-  //   digitalWrite(LEDPin, LOW);
-  // }
+  if (data[2] == 0 ||
+    data[2] == 255 ||
+    data[3] == 0 ||
+    data[3] == 255 ||
+    data[4] == 0 ||
+    data[4] == 255 ||
+    data[5] == 0 ||
+    data[5] == 255)
+  {
+    digitalWrite(LEDPin, HIGH);
+  }
+  else
+  {
+    digitalWrite(LEDPin, LOW);
+  }
+
+  lastPoll = millis();
+  digitalWrite(DebugPin, LOW);
 }
 
 byte SI6To2(byte six)
@@ -595,27 +592,21 @@ void pollResponse()
 void setup() {
   Serial1.begin(800000, SERIAL_6N1);
 
-  // if (Xbox360Config.read() == 0)
-  // {
-  //   Xbox360Config.write(Xbox360Map);
-  // }
-  
-  
-
   pinMode(LEDPin, OUTPUT);    
+  pinMode(8, OUTPUT);
 
   if (UsbH.Init()) 
     {
-    while (true) //halt
+    while (true) //halt if UsbH.Init() fails
     {
-      digitalWrite(LEDPin, true);
-      delay(1000);
-      digitalWrite(LEDPin, false);
-      delay(1000);
+      digitalWrite(LEDPin, LOW);
+      delay(100);
+      digitalWrite(LEDPin, HIGH);
+      delay(400);
     }
   }
 
-  digitalWrite(LEDPin, LOW);
+  digitalWrite(LEDPin, HIGH);
   
   pollUSB();
 }
@@ -678,7 +669,7 @@ void loop() {
         {
           pollResponse();
           isTX = true;
-          lastPoll = millis();
+          pollUSB(); // make sure to poll the usb here.
         }
       }
       recvBuffer = 0;
@@ -686,9 +677,8 @@ void loop() {
   }
 
   // Check if it's time to poll the USB
-  if (lastPoll != 0 && millis() - lastPoll > PollDelay)
+  if (millis() - lastPoll > PollDelay)
   {
     pollUSB();
-    lastPoll = millis() + PollFreq - PollDelay;
   }
 }
