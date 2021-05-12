@@ -1,8 +1,4 @@
-#include <Arduino.h>
-#include <XBOXUSB.h>
-#include <XBOXONE.h>
-#include <PS3USB.h>
-#include <PS4USB.h>
+#include <main.h>
 
 USBHost UsbH;
 XBOXUSB XboxUSB(&UsbH);
@@ -10,7 +6,7 @@ XBOXONE XboxONE(&UsbH);
 PS3USB PS3(&UsbH);
 PS4USB PS4(&UsbH);
 
-USBHost keebH;
+USBHost keebH = UsbH;
 KeyboardController keyboard(keebH);
 
 keebBindingsMap keebmap;
@@ -34,7 +30,7 @@ int LEDPin = 13;
 int DebugPin = 8;
 
 // wait this many ms after the last SI poll command before polling the USB
-uint16_t PollDelay = 3;
+uint16_t PollDelay = 5;
 
 // // wait this many ms after USB polling to poll USB again, if there is no SI poll.
 // int PollFreq = 50;
@@ -381,6 +377,7 @@ void pollUSB()
   // If chain tests until it finds a match for the connected controller
   if (XboxUSB.Xbox360Connected)
   {
+    keebMode = false;
     // This is the Xbox 360 Wired controller. The wireless controller is not supported.
     databuf[0] = 0x00;
     databuf[0] |= XboxUSB.getButtonPress(A);
@@ -411,6 +408,7 @@ void pollUSB()
   }
   else if (XboxONE.XboxOneConnected)
   {
+    keebMode = false;
     // This is the Xbox One controller, connected via USB
     databuf[0] = 0x00;
     databuf[0] |= XboxONE.getButtonPress(A);
@@ -439,6 +437,7 @@ void pollUSB()
   }
   else if (PS3.PS3Connected)
   {
+    keebMode = false;
     // This is the Playstation 3 controller, connected via USB. Both the Dualshock and Sixaxis only versions work.
     databuf[0] = 0x00;
     databuf[0] |= PS3.getButtonPress(CROSS);
@@ -466,6 +465,7 @@ void pollUSB()
   }
   else if (PS4.connected())
   {
+    keebMode = false;
     // This is the Playstation 4 controller, Connected via USB.
     databuf[0] = 0x00;
     databuf[0] |= PS4.getButtonPress(CROSS);
@@ -490,6 +490,17 @@ void pollUSB()
     databuf[5] = 255 - PS4.getAnalogHat(RightHatY);
     databuf[6] = PS4.getAnalogButton(L2);
     databuf[7] = PS4.getAnalogButton(R2);
+  }
+  else if (keebMode)
+  {
+    databuf[0] = keebdata[0];
+    databuf[1] = keebdata[1];
+    databuf[2] = keebdata[2];
+    databuf[3] = keebdata[3];
+    databuf[4] = keebdata[4];
+    databuf[5] = keebdata[5];
+    databuf[6] = keebdata[6];
+    databuf[7] = keebdata[7];
   }
   else // set to neutral if no controller recognized
   {
@@ -547,9 +558,8 @@ byte SI6To2(byte six)
     return 0b00000011;
   case 0b00111111:
     return 0b00000000;//this is the stop bit.
-  default:
-    break;
   }
+  return 0b00000000;
 }
 
 byte SI2To6(byte two)
@@ -566,6 +576,7 @@ byte SI2To6(byte two)
   case 0b00000011:
     return 0b00110111;
   }
+  return 0b00000100;
 }
 
 void SISendByte(byte toSend)
@@ -669,7 +680,7 @@ void loop() {
         {
           pollResponse();
           isTX = true;
-          pollUSB(); // make sure to poll the usb here.
+          lastPoll = millis();
         }
       }
       recvBuffer = 0;
