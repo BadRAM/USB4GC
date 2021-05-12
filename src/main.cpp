@@ -15,12 +15,14 @@ PS4USB PS4(&UsbH);
 
 // this pin drives a debug LED
 int LEDPin = 13;
+// this pin can be logic analyzed for high speed status reporting
+int DebugPin = 8;
 
 // wait this many ms after the last SI poll command before polling the USB
-int PollDelay = 4;
+uint16_t PollDelay = 3;
 
-// wait this many ms after USB polling to poll USB again, if there is no SI poll.
-int PollFreq = 100;
+// // wait this many ms after USB polling to poll USB again, if there is no SI poll.
+// int PollFreq = 50;
 
 // --------
 
@@ -30,7 +32,7 @@ bool timeOfLastProbe = 0;
 bool isTX = false;
 bool AButtonDown = false;
 
-unsigned long lastPoll = 0; // this is the millis() of the last time the console polled for input data.
+unsigned long lastPoll = 0; // this is the millis() of the last time we polled the usb
 
 byte data[8];
 byte databuf[8];
@@ -45,8 +47,9 @@ byte databuf[8];
 // sending the response, so it needs to be timed in between SI polls
 void pollUSB() 
 {
-  UsbH.Task();
+  digitalWrite(DebugPin, HIGH);
 
+  UsbH.Task();
 
   // If chain tests until it finds a match for the connected controller
   if (XboxUSB.Xbox360Connected)
@@ -198,6 +201,9 @@ void pollUSB()
   {
     digitalWrite(LEDPin, LOW);
   }
+
+  lastPoll = millis();
+  digitalWrite(DebugPin, LOW);
 }
 
 byte SI6To2(byte six)
@@ -260,19 +266,20 @@ void setup() {
   Serial1.begin(800000, SERIAL_6N1);
 
   pinMode(LEDPin, OUTPUT);    
+  pinMode(8, OUTPUT);
 
   if (UsbH.Init()) 
     {
-    while (true) //halt
+    while (true) //halt if UsbH.Init() fails
     {
-      digitalWrite(LEDPin, true);
-      delay(1000);
-      digitalWrite(LEDPin, false);
-      delay(1000);
+      digitalWrite(LEDPin, LOW);
+      delay(100);
+      digitalWrite(LEDPin, HIGH);
+      delay(400);
     }
   }
 
-  digitalWrite(LEDPin, LOW);
+  digitalWrite(LEDPin, HIGH);
   
   pollUSB();
 }
@@ -335,7 +342,7 @@ void loop() {
         {
           pollResponse();
           isTX = true;
-          lastPoll = millis();
+          pollUSB(); // make sure to poll the usb here.
         }
       }
       recvBuffer = 0;
@@ -343,9 +350,8 @@ void loop() {
   }
 
   // Check if it's time to poll the USB
-  if (lastPoll != 0 && millis() - lastPoll > PollDelay)
+  if (millis() - lastPoll > PollDelay)
   {
     pollUSB();
-    lastPoll = millis() + PollFreq - PollDelay;
   }
 }
