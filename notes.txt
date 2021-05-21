@@ -1,3 +1,53 @@
+When connecting Xbox controller successfully
+
+00:45:28.192 -> USBH status: 12
+00:45:28.285 -> USBH status: 12
+00:45:28.424 -> USBH status: 12
+00:45:28.518 -> USBH status: 20
+00:45:28.612 -> USBH status: 20
+00:45:28.704 -> USBH status: 30
+00:45:28.798 -> USBH status: 40
+00:45:28.891 -> USBH status: 50
+00:45:28.984 -> USBH status: 80
+00:45:29.590 -> USBH status: 90
+00:45:29.684 -> USBH status: 90
+00:45:29.824 -> USBH status: 90
+
+When connecting Keyboard unsuccessfully
+
+00:47:56.405 -> USBH status: 12
+00:47:56.497 -> USBH status: 12
+00:47:56.591 -> USBH status: 12
+00:47:56.684 -> USBH status: 20
+00:47:56.776 -> USBH status: 20
+00:47:56.870 -> USBH status: 30
+00:47:56.963 -> USBH status: 40
+00:47:57.104 -> USBH status: 50
+00:47:57.196 -> USBH status: 80
+00:47:57.985 -> USBH status: 90
+00:47:58.078 -> USBH status: 90
+00:47:58.172 -> USBH status: 90
+
+When Connecting Keyboard successfully
+
+00:49:44.734 -> KeebH status: 12
+00:49:44.828 -> KeebH status: 12
+00:49:44.921 -> KeebH status: 12
+00:49:45.015 -> KeebH status: 20
+00:49:45.155 -> KeebH status: 20
+00:49:45.248 -> KeebH status: 30
+00:49:45.341 -> KeebH status: 40
+00:49:45.432 -> KeebH status: 50
+00:49:45.525 -> KeebH status: 80
+00:49:48.090 -> KeebH status: 90
+00:49:48.178 -> KeebH status: 90
+00:49:48.317 -> KeebH status: 90
+
+When Connecting Xbox controller Unsuccessfully
+
+
+
+
 Dell Keyboard:
 
 20:01:48.337 -> 
@@ -53,4 +103,322 @@ Dell Keyboard:
 20:01:48.417 -> 
 20:01:48.417 -> 
 20:01:48.417 -> Addr:1(0.0.1)
+
+PS4 Controller:
+
+08:05:28.406 -> 
+08:05:28.406 -> 
+08:05:28.406 -> 01
+08:05:28.406 -> --
+08:05:28.406 -> 
+08:05:28.406 -> Device descriptor: 
+08:05:28.406 -> Descriptor Length:	12
+08:05:28.406 -> Descriptor type:	01
+08:05:28.406 -> USB version:		0200
+08:05:28.406 -> Device class:		00
+08:05:28.406 -> Device Subclass:	00
+08:05:28.406 -> Device Protocol:	00
+08:05:28.406 -> Max.packet size:	40
+08:05:28.406 -> Vendor  ID:		054C
+08:05:28.406 -> Product ID:		05C4
+08:05:28.406 -> Revision ID:		0100
+08:05:28.406 -> Mfg.string index:	01
+08:05:28.406 -> Prod.string index:	02
+08:05:28.406 -> Serial number index:	00
+08:05:28.453 -> Number of conf.:	01
+08:05:28.453 -> 
+08:05:28.453 -> Configuration descriptor:
+08:05:28.453 -> Total length:		0029
+08:05:28.453 -> Num.intf:		01
+08:05:28.453 -> Conf.value:		01
+08:05:28.453 -> Conf.string:		00
+08:05:28.453 -> Attr.:			C0
+08:05:28.453 -> Max.pwr:		FA
+08:05:28.453 -> 
+08:05:28.453 -> Interface descriptor:
+08:05:28.453 -> Intf.number:		00
+08:05:28.453 -> Alt.:			00
+08:05:28.453 -> Endpoints:		02
+08:05:28.453 -> Intf. Class:		03
+08:05:28.453 -> Intf. Subclass:		00
+08:05:28.453 -> Intf. Protocol:		00
+08:05:28.453 -> Intf.string:		00
+08:05:28.453 -> 
+08:05:28.453 -> HID Descriptor:
+08:05:28.453 -> HID Class Release:	0111
+08:05:28.453 -> Country Code:		00
+08:05:28.453 -> Numb Class Descriptor:	01
+08:05:28.453 -> Descriptor Type:	REPORT DESCRIPTOR
+08:05:28.453 -> CSize Report Descr:	01E3
+08:05:28.453 -> 
+08:05:28.453 -> Endpoint descriptor:
+08:05:28.453 -> Endpoint address:	IN		04
+08:05:28.453 -> Attr.:			INTERRUPT	03
+08:05:28.453 -> Max.pkt size:		0040
+08:05:28.501 -> Polling interval:	05
+08:05:28.501 -> 
+08:05:28.501 -> Endpoint descriptor:
+08:05:28.501 -> Endpoint address:	OUT		03
+08:05:28.501 -> Attr.:			INTERRUPT	03
+08:05:28.501 -> Max.pkt size:		0040
+08:05:28.501 -> Polling interval:	05
+08:05:28.501 -> 
+08:05:28.501 -> 
+08:05:28.593 -> Addr:1(0.0.1)
+
+
+
+XBOX 360 USB
+
+08:23:53.279 -> 
+08:23:53.279 -> 
+08:23:53.279 -> 01
+08:23:53.279 -> --
+08:23:53.279 -> 
+08:23:53.279 -> Device descriptor: 
+08:23:53.279 -> Descriptor Length:	12
+08:23:53.279 -> Descriptor type:	01
+08:23:53.279 -> USB version:		0200
+08:23:53.279 -> Device class:		FF
+08:23:53.279 -> Device Subclass:	FF
+08:23:53.279 -> Device Protocol:	FF
+08:23:53.279 -> Max.packet size:	08
+08:23:53.279 -> Vendor  ID:		045E
+08:23:53.279 -> Product ID:		028E
+08:23:53.279 -> Revision ID:		0110
+08:23:53.279 -> Mfg.string index:	01
+08:23:53.279 -> Prod.string index:	02
+08:23:53.279 -> Serial number index:	03
+08:23:53.279 -> Number of conf.:	01
+08:23:53.279 -> 
+08:23:53.279 -> Configuration descriptor:
+08:23:53.279 -> Total length:		0099
+08:23:53.279 -> Num.intf:		04
+08:23:53.279 -> Conf.value:		01
+08:23:53.279 -> Conf.string:		00
+08:23:53.279 -> Attr.:			A0
+08:23:53.279 -> Max.pwr:		FA
+08:23:53.279 -> 
+08:23:53.279 -> Interface descriptor:
+08:23:53.279 -> Intf.number:		00
+08:23:53.279 -> Alt.:			00
+08:23:53.326 -> Endpoints:		02
+08:23:53.326 -> Intf. Class:		FF
+08:23:53.326 -> Intf. Subclass:		5D
+08:23:53.326 -> Intf. Protocol:		01
+08:23:53.326 -> Intf.string:		00
+08:23:53.326 -> 
+08:23:53.326 -> HID Descriptor:
+08:23:53.326 -> HID Class Release:	0100
+08:23:53.326 -> Country Code:		01
+08:23:53.326 -> Numb Class Descriptor:	25
+08:23:53.326 -> Descriptor Type:	81
+08:23:53.326 -> CSize Report Descr:	0014
+08:23:53.326 -> 
+08:23:53.326 -> Endpoint descriptor:
+08:23:53.326 -> Endpoint address:	IN		01
+08:23:53.326 -> Attr.:			INTERRUPT	03
+08:23:53.326 -> Max.pkt size:		0020
+08:23:53.326 -> Polling interval:	04
+08:23:53.326 -> 
+08:23:53.326 -> Endpoint descriptor:
+08:23:53.326 -> Endpoint address:	OUT		02
+08:23:53.326 -> Attr.:			INTERRUPT	03
+08:23:53.326 -> Max.pkt size:		0020
+08:23:53.326 -> Polling interval:	08
+08:23:53.326 -> 
+08:23:53.326 -> Interface descriptor:
+08:23:53.326 -> Intf.number:		01
+08:23:53.326 -> Alt.:			00
+08:23:53.326 -> Endpoints:		04
+08:23:53.326 -> Intf. Class:		FF
+08:23:53.374 -> Intf. Subclass:		5D
+08:23:53.374 -> Intf. Protocol:		03
+08:23:53.374 -> Intf.string:		00
+08:23:53.374 -> 
+08:23:53.374 -> HID Descriptor:
+08:23:53.374 -> HID Class Release:	0100
+08:23:53.374 -> Country Code:		01
+08:23:53.374 -> Numb Class Descriptor:	01
+08:23:53.374 -> Descriptor Type:	83
+08:23:53.374 -> CSize Report Descr:	0140
+08:23:53.374 -> 
+08:23:53.374 -> Endpoint descriptor:
+08:23:53.374 -> Endpoint address:	IN		03
+08:23:53.374 -> Attr.:			INTERRUPT	03
+08:23:53.374 -> Max.pkt size:		0020
+08:23:53.374 -> Polling interval:	02
+08:23:53.374 -> 
+08:23:53.374 -> Endpoint descriptor:
+08:23:53.374 -> Endpoint address:	OUT		04
+08:23:53.374 -> Attr.:			INTERRUPT	03
+08:23:53.374 -> Max.pkt size:		0020
+08:23:53.374 -> Polling interval:	04
+08:23:53.374 -> 
+08:23:53.374 -> Endpoint descriptor:
+08:23:53.374 -> Endpoint address:	IN		05
+08:23:53.374 -> Attr.:			INTERRUPT	03
+08:23:53.374 -> Max.pkt size:		0020
+08:23:53.374 -> Polling interval:	40
+08:23:53.421 -> 
+08:23:53.421 -> Endpoint descriptor:
+08:23:53.421 -> Endpoint address:	OUT		05
+08:23:53.421 -> Attr.:			INTERRUPT	03
+08:23:53.421 -> Max.pkt size:		0020
+08:23:53.421 -> Polling interval:	10
+08:23:53.421 -> 
+08:23:53.421 -> Interface descriptor:
+08:23:53.421 -> Intf.number:		02
+08:23:53.421 -> Alt.:			00
+08:23:53.421 -> Endpoints:		01
+08:23:53.421 -> Intf. Class:		FF
+08:23:53.421 -> Intf. Subclass:		5D
+08:23:53.421 -> Intf. Protocol:		02
+08:23:53.421 -> Intf.string:		00
+08:23:53.421 -> 
+08:23:53.421 -> HID Descriptor:
+08:23:53.421 -> HID Class Release:	0100
+08:23:53.421 -> Country Code:		01
+08:23:53.421 -> Numb Class Descriptor:	22
+08:23:53.421 -> Descriptor Type:	86
+08:23:53.421 -> CSize Report Descr:	0007
+08:23:53.421 -> 
+08:23:53.421 -> Endpoint descriptor:
+08:23:53.421 -> Endpoint address:	IN		06
+08:23:53.421 -> Attr.:			INTERRUPT	03
+08:23:53.421 -> Max.pkt size:		0020
+08:23:53.421 -> Polling interval:	10
+08:23:53.421 -> 
+08:23:53.421 -> Interface descriptor:
+08:23:53.469 -> Intf.number:		03
+08:23:53.469 -> Alt.:			00
+08:23:53.469 -> Endpoints:		00
+08:23:53.469 -> Intf. Class:		FF
+08:23:53.469 -> Intf. Subclass:		FD
+08:23:53.469 -> Intf. Protocol:		13
+08:23:53.469 -> Intf.string:		04
+08:23:53.469 -> Unknown descriptor:
+08:23:53.469 -> Length:		06
+08:23:53.469 -> Type:		41
+08:23:53.469 -> Contents:	0001010300BE
+08:23:53.469 -> 
+08:23:53.469 -> 
+08:23:53.890 -> Addr:1(0.0.1)
+
+
+XBOX One
+
+08:44:04.535 -> Start
+08:44:08.829 -> 
+08:44:08.829 -> 
+08:44:08.829 -> 01
+08:44:08.829 -> --
+08:44:08.829 -> 
+08:44:08.829 -> Device descriptor: 
+08:44:08.829 -> Descriptor Length:	12
+08:44:08.829 -> Descriptor type:	01
+08:44:08.829 -> USB version:		0200
+08:44:08.829 -> Device class:		FF
+08:44:08.829 -> Device Subclass:	47
+08:44:08.829 -> Device Protocol:	D0
+08:44:08.829 -> Max.packet size:	40
+08:44:08.829 -> Vendor  ID:		045E
+08:44:08.829 -> Product ID:		02D1
+08:44:08.829 -> Revision ID:		0101
+08:44:08.829 -> Mfg.string index:	01
+08:44:08.829 -> Prod.string index:	02
+08:44:08.829 -> Serial number index:	03
+08:44:08.829 -> Number of conf.:	01
+08:44:08.829 -> 
+08:44:08.829 -> Configuration descriptor:
+08:44:08.829 -> Total length:		0060
+08:44:08.829 -> Num.intf:		03
+08:44:08.874 -> Conf.value:		01
+08:44:08.874 -> Conf.string:		00
+08:44:08.874 -> Attr.:			A0
+08:44:08.874 -> Max.pwr:		FA
+08:44:08.874 -> 
+08:44:08.874 -> Interface descriptor:
+08:44:08.874 -> Intf.number:		00
+08:44:08.874 -> Alt.:			00
+08:44:08.874 -> Endpoints:		02
+08:44:08.874 -> Intf. Class:		FF
+08:44:08.874 -> Intf. Subclass:		47
+08:44:08.874 -> Intf. Protocol:		D0
+08:44:08.874 -> Intf.string:		00
+08:44:08.874 -> 
+08:44:08.874 -> Endpoint descriptor:
+08:44:08.874 -> Endpoint address:	OUT		01
+08:44:08.874 -> Attr.:			INTERRUPT	03
+08:44:08.874 -> Max.pkt size:		0040
+08:44:08.874 -> Polling interval:	04
+08:44:08.874 -> 
+08:44:08.874 -> Endpoint descriptor:
+08:44:08.874 -> Endpoint address:	IN		01
+08:44:08.874 -> Attr.:			INTERRUPT	03
+08:44:08.874 -> Max.pkt size:		0040
+08:44:08.874 -> Polling interval:	04
+08:44:08.874 -> 
+08:44:08.874 -> Interface descriptor:
+08:44:08.874 -> Intf.number:		01
+08:44:08.874 -> Alt.:			00
+08:44:08.874 -> Endpoints:		00
+08:44:08.921 -> Intf. Class:		FF
+08:44:08.921 -> Intf. Subclass:		47
+08:44:08.921 -> Intf. Protocol:		D0
+08:44:08.921 -> Intf.string:		00
+08:44:08.921 -> 
+08:44:08.921 -> Interface descriptor:
+08:44:08.921 -> Intf.number:		01
+08:44:08.921 -> Alt.:			01
+08:44:08.921 -> Endpoints:		02
+08:44:08.921 -> Intf. Class:		FF
+08:44:08.921 -> Intf. Subclass:		47
+08:44:08.921 -> Intf. Protocol:		D0
+08:44:08.921 -> Intf.string:		00
+08:44:08.921 -> 
+08:44:08.921 -> Endpoint descriptor:
+08:44:08.921 -> Endpoint address:	OUT		02
+08:44:08.921 -> Attr.:			ISO	01
+08:44:08.921 -> Max.pkt size:		00E4
+08:44:08.921 -> Polling interval:	01
+08:44:08.921 -> 
+08:44:08.921 -> Endpoint descriptor:
+08:44:08.921 -> Endpoint address:	IN		02
+08:44:08.921 -> Attr.:			ISO	01
+08:44:08.921 -> Max.pkt size:		00E4
+08:44:08.921 -> Polling interval:	01
+08:44:08.921 -> 
+08:44:08.921 -> Interface descriptor:
+08:44:08.921 -> Intf.number:		02
+08:44:08.921 -> Alt.:			00
+08:44:08.921 -> Endpoints:		00
+08:44:08.921 -> Intf. Class:		FF
+08:44:08.921 -> Intf. Subclass:		47
+08:44:08.969 -> Intf. Protocol:		D0
+08:44:08.969 -> Intf.string:		00
+08:44:08.969 -> 
+08:44:08.969 -> Interface descriptor:
+08:44:08.969 -> Intf.number:		02
+08:44:08.969 -> Alt.:			01
+08:44:08.969 -> Endpoints:		02
+08:44:08.969 -> Intf. Class:		FF
+08:44:08.969 -> Intf. Subclass:		47
+08:44:08.969 -> Intf. Protocol:		D0
+08:44:08.969 -> Intf.string:		00
+08:44:08.969 -> 
+08:44:08.969 -> Endpoint descriptor:
+08:44:08.969 -> Endpoint address:	OUT		03
+08:44:08.969 -> Attr.:			BULK	02
+08:44:08.969 -> Max.pkt size:		0040
+08:44:08.969 -> Polling interval:	00
+08:44:08.969 -> 
+08:44:08.969 -> Endpoint descriptor:
+08:44:08.969 -> Endpoint address:	IN		03
+08:44:08.969 -> Attr.:			BULK	02
+08:44:08.969 -> Max.pkt size:		0040
+08:44:08.969 -> Polling interval:	00
+08:44:08.969 -> 
+08:44:08.969 -> 
+08:44:08.969 -> Addr:1(0.0.1)
 
