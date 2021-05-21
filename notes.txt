@@ -45,6 +45,18 @@ When Connecting Keyboard successfully
 
 When Connecting Xbox controller Unsuccessfully
 
+00:50:48.642 -> KeebH status: 12
+00:50:48.734 -> KeebH status: 12
+00:50:48.873 -> KeebH status: 12
+00:50:48.967 -> KeebH status: 20
+00:50:49.060 -> KeebH status: 20
+00:50:49.153 -> KeebH status: 30
+00:50:49.247 -> KeebH status: 40
+00:50:49.338 -> KeebH status: 50
+00:50:49.478 -> KeebH status: 80
+00:50:50.269 -> KeebH status: A0
+00:50:50.363 -> KeebH status: A0
+00:50:50.455 -> KeebH status: A0
 
 
 
