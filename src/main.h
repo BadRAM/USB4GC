@@ -70,3 +70,38 @@ struct keebBindingsMap
   uint8_t MODXSTRENGTH = 80; 
   uint8_t MODYSTRENGTH = 160; 
 };
+
+byte SI6To2(byte six)
+{
+  switch (six)
+  {
+  case 0b00000100:
+    return 0b00000000;
+  case 0b00000111:
+    return 0b00000001;
+  case 0b00110100:
+    return 0b00000010;
+  case 0b00110111:
+    return 0b00000011;
+  case 0b00111111:
+    return 0b00000000; //this is the stop bit.
+  }
+  return 0b00000000;
+}
+
+byte SI2To6(byte two)
+{
+  // generate an SI message (6 bits) from the last two bits of the input byte.
+  switch (two & 0b00000011)
+  {
+  case 0b00000000:
+    return 0b00000100;
+  case 0b00000001:
+    return 0b00110100;
+  case 0b00000010:
+    return 0b00000111;
+  case 0b00000011:
+    return 0b00110111;
+  }
+  return 0b00000100;
+}
