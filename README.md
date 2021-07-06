@@ -58,7 +58,7 @@ Let's get the hardest part out of the way first. The goal here is to be able to 
 
 Now we just need to lay everything out on the breadboard. Here is the schematic if you want to arrange everything yourself. I color code and pre-strip all the wires for your convenience, you can achieve a similar look by following [this](https://www.youtube.com/watch?v=PE-_rJqvDhQ) guide from the legendary Ben Eater.
 
-3.1: Place the JST plug, Seeeduino Xiao, and NPN transistor. Make sure the transistor's Flat side is facing outwards, towards the near edge of the breadboard.
+3.1: Place the JST socket, Seeeduino Xiao, and NPN transistor. Make sure the transistor's Flat side is facing outwards, towards the near edge of the breadboard.
 
 3.2: Place all the green wires.
 
@@ -73,16 +73,18 @@ Now we just need to lay everything out on the breadboard. Here is the schematic 
 
 That Seeeduino Xiao doesn't know how to speak gamecube yet.
 
-4.1: Follow Seeed studio's getting started guide for the xiao: https://wiki.seeedstudio.com/Seeeduino-XIAO/#getting-started
+4.1: Go to this github repository's [releases]() page and download the latest release's firmware binary. It will be named USB4GC_FW_BIN_xx.UF2.
 
-4.2: Go to this github repository's [releases]() page and download the latest release's firmware binary. It will be named USB4GC_FW_BIN_xx.bin.
+4.2: Plug a jumper wire into ground (row 25 is easily accessible) and with the other end, tap the "RST" pad on the Xiao twice. The onboard LED should begin to pulsate, and the Seeeduino should appear as a removable storage device on your computer.
 
-4.3: If you still have the arduino IDE popup open from uploading the blink sketch 
-
-4.3: Plug a jumper cable into ground (row 25 is accessible) and with the other end, tap the "RST" pad on the Xiao twice. The onboard LED should begin to pulsate.
-
-4.4: 
+4.3: copy the USB4GC_FW_BIN_xx.UF2 file onto the Xiao. If this step is successful, the amber LED should begin to flash steadily.
 
 
+### Step 5: Usage instructions
+
+To use the adapter, plug the GameCube cable into the JST socket on the breadboard, then into the controller port on your console. Plug your controller into the Xiao using your USB-A to USB-C adapter, and you're done. If you want to use a keyboard, you will need to connect the keyboard once to switch the adapter into keyboard mode, then disconnect and reconnect it for it to work. once in keyboard mode, you will need to do the same with any controller to return to standard mode.
 
 
+## Contributing
+
+If there are any features you would like to implement, I'd be happy to help you get set up. feel free to contact me via Discord at BadRAM#6838
