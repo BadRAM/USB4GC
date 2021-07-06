@@ -64,7 +64,7 @@ Let's get the hardest part out of the way first. The goal here is to be able to 
 Now we just need to lay everything out on the breadboard. I color code and pre-strip all the wires for your convenience, you can achieve a similar look by following [this](https://www.youtube.com/watch?v=PE-_rJqvDhQ) guide from the legendary Ben Eater.
 
 Here is the schematic if you want to arrange everything yourself.
-![Schematic.png](https://octodex.github.com/images/yaktocat.png)
+![Schematic.png](https://github.com/BadRAM/USB4GC/blob/main/docs/Schematic.png)
 
 3.1: Place the JST socket, Seeeduino Xiao, and PNP transistor. Make sure the transistor's Flat side is facing outwards, towards the near edge of the breadboard.
 
