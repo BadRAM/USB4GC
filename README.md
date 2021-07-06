@@ -30,7 +30,7 @@ Materials | Comment
 Seeduino Xiao | Most of these will need soldering to attach the header pins, if you do not want to solder make sure the Xiao you are purchasing has header pins already attached.
 USB-C to USB-A Adapter | 
 solderless breadboard | The tutorial build uses a 1/2 size standard breadboard for clarity but everything can pretty easily fit on a 17 row mini breadboard.
-NPN transistor | 
+PNP transistor | 
 GameCube controller cable to sacrifice | I recommend using a cheap GCC extension cable to avoid killing a controller, but dead (or mad catz) controllers will work too, just make sure the cable wasn't the point of failure.
 Breadboard pluggable wires | I use 22 gauge solid core wires in the instructions.
 JST-XH 5 position socket, plug, and appropriate crimping tool | This is for attaching the GameCube controller cable to the breadboard. There are a few other ways to achieve this, detailed in step 2.
@@ -61,9 +61,12 @@ Let's get the hardest part out of the way first. The goal here is to be able to 
 
 ### Step 3: Breadboard Assembly
 
-Now we just need to lay everything out on the breadboard. Here is the schematic if you want to arrange everything yourself. I color code and pre-strip all the wires for your convenience, you can achieve a similar look by following [this](https://www.youtube.com/watch?v=PE-_rJqvDhQ) guide from the legendary Ben Eater.
+Now we just need to lay everything out on the breadboard. I color code and pre-strip all the wires for your convenience, you can achieve a similar look by following [this](https://www.youtube.com/watch?v=PE-_rJqvDhQ) guide from the legendary Ben Eater.
 
-3.1: Place the JST socket, Seeeduino Xiao, and NPN transistor. Make sure the transistor's Flat side is facing outwards, towards the near edge of the breadboard.
+Here is the schematic if you want to arrange everything yourself.
+![Schematic.png](https://octodex.github.com/images/yaktocat.png)
+
+3.1: Place the JST socket, Seeeduino Xiao, and PNP transistor. Make sure the transistor's Flat side is facing outwards, towards the near edge of the breadboard.
 
 3.2: Place all the green wires.
 
