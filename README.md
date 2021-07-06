@@ -24,6 +24,7 @@ Multimeter for continuity testing | knockoff GameCube cable wires are often corr
 USB-C - USB-A cable | for programming the Seeeduino Xiao
 Soldering iron | it is possible to do without one, but you will need a JST crimping tool and a preassembled Seeeduino Xiao
 JST-XH Crimping tool | it is possible to do without one, but you will need to do some difficult soldering and your cable will be much weaker.
+X-Acto knife or equivalent | you will need a good amount of precision to remove the cable insulation.
 
 Materials | Comment
 -|-
@@ -37,9 +38,20 @@ JST-XH 5 position socket, plug, and appropriate crimping tool | This is for atta
 
 ### Step 2: Cable Preparation
 
-Let's get the hardest part out of the way first. The goal here is to be able to plug a breadboard into a GameCube controller port. If you can find a better way of doing this, I'd love to hear about it! If you do not have a JST-XH crimp tool and appropriate connectors, but do have a soldering iron, some perfboard, headers, and some patience, proceed to step 2b.1.
+This is the hardest assembly step. The goal here is to be able to plug a breadboard into a GameCube controller port. I found that the best method for me was to crimp a JST-XH plug to the end of the cable, and plug that into a socket on my breadboard. This connection could also be achieved in a less compact form factor with screw terminals, or improvised by soldering the wires directly to a header pin strip.
 
-2.1: Decide how long you want your adapter's cable to be, then cut your GameCube controller cable to that length, plus about 2 centimeters.
+![Schematic.png](https://github.com/BadRAM/USB4GC/blob/main/docs/Connectors.png)
+
+While you are preparing your cable, check for continuity through each wire to the gamecube plug. Many 3rd party cables follow the nintendo color code, but the only way to know that yours does is to test it. When probing the GameCube plug, do not jam your probe into the opening in the middle. This can damage the spring contacts and break the plug. Instead, get a paperclip, jumper wire, or other small bit of wire and poke it gently into the slot above each pin of the plug. It is much easier to isolate a single wire this way as well.
+
+![Schematic.png](https://github.com/BadRAM/USB4GC/blob/main/docs/Probing.png)
+
+If your cable does not follow the following color code chart, then write down which color is which plug pin before moving to the next part.
+
+
+
+
+<!-- 2.1: Decide how long you want your adapter's cable to be, then cut your GameCube controller cable to that length, plus about 2 centimeters.
 
 2.2: Carefully cut away 1.5 cm of the rubber cable insulation, and then peel back the foil shielding around the wire bundle (if present). Check that none of the wires have been damaged or removed in the procedure. If any of them have, cut the entire cable off just above the damage and start again.
 
@@ -56,17 +68,28 @@ Let's get the hardest part out of the way first. The goal here is to be able to 
 
 2b.1: Perform 2.1 through 2.4, but cut away much more cable insulation, and strip at least 5mm from the wires.
 
-2b.2: break off a segment of perfboard
+2b.2: break off a segment of perfboard -->
 
 
 ### Step 3: Breadboard Assembly
 
-Now we just need to lay everything out on the breadboard. I color code and pre-strip all the wires for your convenience, you can achieve a similar look by following [this](https://www.youtube.com/watch?v=PE-_rJqvDhQ) guide from the legendary Ben Eater.
+Now we just need to lay everything out on the breadboard. I color code and pre-bend all the wires for a clean, readable look. [Here](https://www.youtube.com/watch?v=PE-_rJqvDhQ) is a guide on how to achieve this from the legendary Ben Eater.
 
-Here is the schematic if you want to arrange everything yourself.
+Here is the schematic.
 ![Schematic.png](https://github.com/BadRAM/USB4GC/blob/main/docs/Schematic.png)
 
-3.1: Place the JST socket, Seeeduino Xiao, and PNP transistor. Make sure the transistor's Flat side is facing outwards, towards the near edge of the breadboard.
+And here are two example assemblies, with highlighted circuit paths.
+![Schematic.png](https://github.com/BadRAM/USB4GC/blob/main/docs/BBExample.png)
+
+If you want to recreate these, I recommend placing the wires in the following order:
+ 1. Green
+ 2. Red
+ 3. Yellow
+ 4. Blue
+ 5. Black
+
+
+<!-- 3.1: Place the JST socket, Seeeduino Xiao, and PNP transistor. Make sure the transistor's Flat side is facing outwards, towards the near edge of the breadboard.
 
 3.2: Place all the green wires.
 
@@ -74,20 +97,18 @@ Here is the schematic if you want to arrange everything yourself.
 
 3.4: Place all the yellow and blue wires.
 
-3.5: Place all the black wires.
+3.5: Place all the black wires. -->
 
 
 ### Step 4: Programming
 
-That Seeeduino Xiao doesn't know how to speak gamecube yet.
-
-4.1: Go to this github repository's [releases](https://github.com/BadRAM/USB4GCsecret/releases) page and download the latest release's firmware binary. It will be named USB4GC_FW_BIN_xx.UF2.
+4.1: Go to this github repository's [releases](https://github.com/BadRAM/USB4GCsecret/releases) page and download the latest release's firmware binary. It will be named USB4GC_FW_xx.UF2.
 
 4.2: Connect the Xiao to your computer via the USB-C cable.
 
 4.2: Plug a jumper wire into ground (row 25 is easily accessible) and with the other end, tap the "RST" pad on the Xiao twice. The onboard LED should begin to pulsate, and the Seeeduino should appear as a removable storage device on your computer.
 
-4.3: copy the USB4GC_FW_BIN_xx.UF2 file onto the Xiao. If this step is successful, the amber LED should begin to flash steadily.
+4.3: copy the USB4GC_FW_xx.UF2 file onto the Xiao. Once this step is successful, the storage device will disconnect and the amber LED on the Xiao will flash quickly.
 
 
 ### Step 5: Usage instructions
@@ -95,6 +116,6 @@ That Seeeduino Xiao doesn't know how to speak gamecube yet.
 To use the adapter, plug the GameCube cable into the JST socket on the breadboard, then into the controller port on your console. Plug your controller into the Xiao using your USB-A to USB-C adapter, and you're done. If you want to use a keyboard, you will need to connect the keyboard once to switch the adapter into keyboard mode, then disconnect and reconnect it for it to work. once in keyboard mode, you will need to do the same with any controller to return to standard mode.
 
 
-## Contributing
+## Contact
 
-If there are any features you would like to implement, I'd be happy to help you get set up. feel free to contact me via Discord at BadRAM#6838
+If you would like to contribute, need help with some part of assembly, or just have a question, I'd be happy to help. feel free to contact me via Discord at BadRAM#6838
