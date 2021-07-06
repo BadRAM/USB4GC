@@ -17,12 +17,6 @@ BindingsMap XboxOneMap;
 BindingsMap PS3Map;
 BindingsMap PS4Map;
 
-// FlashStorage(keebconfig, keebBindingsMap);
-// FlashStorage(Xbox360Config, BindingsMap);
-// FlashStorage(XboxOneConfig, BindingsMap);
-// FlashStorage(PS3Config, BindingsMap);
-// FlashStorage(PS4Config, BindingsMap);
-
 // Config Variables:
 
 // this pin drives a debug LED
