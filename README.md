@@ -12,6 +12,8 @@ Supported Controllers:
 
 Tested on GameCube, Wii, and PC through Mayflash Adapter.
 
+[Video Demonstration](https://www.youtube.com/watch?v=xv4ccZiwUJk)
+
 
 ## How to
 
