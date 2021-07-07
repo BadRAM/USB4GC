@@ -51,6 +51,7 @@ If your cable does not follow the following color code chart, then write down wh
 ![Probing.png](https://github.com/BadRAM/USB4GC/blob/main/docs/PlugPinout.png)
 
 Pin # | Color | Name | Comment
+-|-|-|-
 1 | Green | GND | Can safely be tied to the other ground.
 2 | Red | DATA | This line is pulled to 3.5v by the GameCube, and pulsed low to send data in either direction.
 3 | Yellow | 5v | This powers the rumble motor on a regular GCC, but we'll use it for usb power.
