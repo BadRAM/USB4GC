@@ -81,10 +81,10 @@ Here is the schematic.
 And here are two example assemblies, with highlighted circuit paths.
 ![Schematic.png](https://github.com/BadRAM/USB4GC/blob/main/docs/BBExample.png)
 
-If you want to recreate these, I recommend placing the wires in the following order:
- 1. Green
- 2. Red
- 3. Yellow
+The wire colors, in order that they should be placed are:
+ 1. Green: Ground
+ 2. Red: Data
+ 3. Yellow: 
  4. Blue
  5. Black
 
