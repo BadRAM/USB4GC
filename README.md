@@ -31,7 +31,7 @@ Materials | Comment
 Seeduino Xiao | Most of these will need soldering to attach the header pins, if you do not want to solder make sure the Xiao you are purchasing has header pins already attached.
 USB-C to USB-A Adapter | 
 solderless breadboard | The tutorial build uses a 1/2 size standard breadboard for clarity but everything can pretty easily fit on a 17 row mini breadboard.
-PNP transistor | 
+**PNP** transistor | 
 GameCube controller cable to sacrifice | I recommend using a cheap GCC extension cable to avoid killing a controller, but dead (or mad catz) controllers will work too, just make sure the cable wasn't the point of failure.
 Breadboard pluggable wires | I use 22 gauge solid core wires in the instructions.
 JST-XH 5 position socket, plug, and appropriate crimping tool | This is for attaching the GameCube controller cable to the breadboard. There are a few other ways to achieve this, detailed in step 2.
