@@ -1,7 +1,7 @@
 # USB4GC
 
 ## What is this
-USB4GC is an adapter which translates between a GameCube controller port and a USB Game controller. You can use it to play gamecube games on nintendo hardware with an xbox or playstation controller, or even a keyboard. It is relatively easy to build your own using a Seeeduino Xiao microcontroller dev board and a couple passive components.
+USB4GC is an adapter which translates between a GameCube controller port and a USB Game controller. You can use it to play gamecube games on nintendo hardware with an xbox or playstation controller, or even a keyboard. No controller modding is required, the adapter is a full USB host. No external power supply is required either. It is easy to build your own using a Seeeduino Xiao microcontroller dev board and a couple passive components.
 
 Supported Controllers:
  - Xbox 360 Wired
