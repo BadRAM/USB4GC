@@ -84,9 +84,10 @@ And here are two example assemblies, with highlighted circuit paths.
 The wire colors, in order that they should be placed are:
  1. Green: Ground
  2. Red: Data
- 3. Yellow: 
- 4. Blue
- 5. Black
+ 3. Yellow: 5v
+ 4. Blue: 3.5v
+ 5. White: TX
+ 6. Black: No electrical purpose, helps keep the USB C-A adapter straight in it's socket to reduce strain on the Xiao's USB port.
 
 
 <!-- 3.1: Place the JST socket, Seeeduino Xiao, and PNP transistor. Make sure the transistor's Flat side is facing outwards, towards the near edge of the breadboard.
