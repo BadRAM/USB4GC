@@ -40,13 +40,24 @@ JST-XH 5 position socket, plug, and appropriate crimping tool | This is for atta
 
 This is the hardest assembly step. The goal here is to be able to plug a breadboard into a GameCube controller port. I found that the best method for me was to crimp a JST-XH plug to the end of the cable, and plug that into a socket on my breadboard. This connection could also be achieved in a less compact form factor with screw terminals, or improvised by soldering the wires directly to a header pin strip.
 
-![Schematic.png](https://github.com/BadRAM/USB4GC/blob/main/docs/Connectors.png)
+![Connectors.png](https://github.com/BadRAM/USB4GC/blob/main/docs/Connectors.png)
 
 While you are preparing your cable, check for continuity through each wire to the gamecube plug. Many 3rd party cables follow the nintendo color code, but the only way to know that yours does is to test it. When probing the GameCube plug, do not jam your probe into the opening in the middle. This can damage the spring contacts and break the plug. Instead, get a paperclip, jumper wire, or other small bit of wire and poke it gently into the slot above each pin of the plug. It is much easier to isolate a single wire this way as well.
 
-![Schematic.png](https://github.com/BadRAM/USB4GC/blob/main/docs/Probing.png)
+![Probing.png](https://github.com/BadRAM/USB4GC/blob/main/docs/Probing.png)
 
 If your cable does not follow the following color code chart, then write down which color is which plug pin before moving to the next part.
+
+![Probing.png](https://github.com/BadRAM/USB4GC/blob/main/docs/PlugPinout.png)
+
+Pin # | Color | Name | Comment
+1 | Green | GND | Can safely be tied to the other ground.
+2 | Red | DATA | This line is pulled to 3.5v by the GameCube, and pulsed low to send data in either direction.
+3 | Yellow | 5v | This powers the rumble motor on a regular GCC, but we'll use it for usb power.
+4 | Blue | 3.5v, or 3V5 | This is logic power. The console can get reset if this is shorted to ground.
+5 | Not Connected | |
+6 | White | GND | Can safely be tied to the other ground. I have reused white as TX on the breadboard.
+7 | Black | Shield | The metal part around the outside of the plug. Can be ignored or tied to ground. In the extension cables I've bought, this was left uninsulated.
 
 
 
@@ -79,7 +90,7 @@ Here is the schematic.
 ![Schematic.png](https://github.com/BadRAM/USB4GC/blob/main/docs/Schematic.png)
 
 And here are two example assemblies, with highlighted circuit paths.
-![Schematic.png](https://github.com/BadRAM/USB4GC/blob/main/docs/BBExample.png)
+![BBExample.png](https://github.com/BadRAM/USB4GC/blob/main/docs/BBExample.png)
 
 The wire colors, in order that they should be placed are:
  1. Green: Ground
