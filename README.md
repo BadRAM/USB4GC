@@ -115,18 +115,17 @@ The wire colors, in order that they should be placed are:
 
 ### Step 4: Programming
 
-4.1: Go to this github repository's [releases](https://github.com/BadRAM/USB4GCsecret/releases) page and download the latest release's firmware binary. It will be named USB4GC_FW_xx.UF2.
+**Do not connect the adapter to your console yet.**
 
-4.2: Connect the Xiao to your computer via the USB-C cable.
+Go to this github repository's [releases](https://github.com/BadRAM/USB4GCsecret/releases) page and download the latest release's firmware binary. It will be named USB4GC_FW_xx.UF2.
 
-4.2: Plug a jumper wire into ground (row 25 is easily accessible) and with the other end, tap the "RST" pad on the Xiao twice. The onboard LED should begin to pulsate, and the Seeeduino should appear as a removable storage device on your computer.
+Connect the Xiao to your computer via the USB-C cable.
 
-4.3: copy the USB4GC_FW_xx.UF2 file onto the Xiao. Once this step is successful, the storage device will disconnect and the amber LED on the Xiao will flash quickly.
+Plug a jumper wire into ground (row 25 is easily accessible) and with the other end, tap the "RST" pad on the Xiao twice. The onboard LED should begin to pulsate, and the Seeeduino should appear as a removable storage device on your computer.
 
+copy the USB4GC_FW_xx.UF2 file onto the Xiao. Once this step is successful, the storage device will disconnect and the amber LED on the Xiao will flash quickly.
 
-### Step 5: Usage instructions
-
-To use the adapter, plug the GameCube cable into the JST socket on the breadboard, then into the controller port on your console. Plug your controller into the Xiao using your USB-A to USB-C adapter, and you're done. If you want to use a keyboard, you will need to connect the keyboard once to switch the adapter into keyboard mode, then disconnect and reconnect it for it to work. once in keyboard mode, you will need to do the same with any controller to return to standard mode.
+You're done! Disconnect the programming cable **before** you plug into your console, and then use your USB A to C adapter to connect your controller of choice. If you want to use a keyboard, then you will need to plug it in once to switch to keyboard mode, then once more to proprerly initialize it. You will need to do the same to return to controller mode after.
 
 
 ## Contact
