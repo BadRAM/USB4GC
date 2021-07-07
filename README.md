@@ -123,7 +123,7 @@ Connect the Xiao to your computer via the USB-C cable.
 
 Plug a jumper wire into ground (row 25 is easily accessible) and with the other end, tap the "RST" pad on the Xiao twice. The onboard LED should begin to pulsate, and the Seeeduino should appear as a removable storage device on your computer.
 
-copy the USB4GC_FW_xx.UF2 file onto the Xiao. Once this step is successful, the storage device will disconnect and the amber LED on the Xiao will flash quickly.
+Copy the USB4GC_FW_xx.UF2 file onto the Xiao. Once this step is successful, the storage device will disconnect and the amber LED on the Xiao will flash quickly.
 
 You're done! Disconnect the programming cable **before** you plug into your console, and then use your USB A to C adapter to connect your controller of choice. If you want to use a keyboard, then you will need to plug it in once to switch to keyboard mode, then once more to proprerly initialize it. You will need to do the same to return to controller mode after.
 
