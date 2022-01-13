@@ -1,4 +1,5 @@
 #include <main.h>
+#include <FlashStorage.h>
 
 USBHost UsbH;
 XBOXUSB XboxUSB(&UsbH);
@@ -21,10 +22,14 @@ BindingsMap PS4Map;
 
 // this pin drives a debug LED
 int LEDPin = 13;
+int LEDPinR = 2;
+int LEDPinG = 5;
+int LEDPinB = 4;
 // this pin can be logic analyzed for high speed status reporting
 int DebugPin = 8;
 // this pin is read to decide if in keyboard or game controller mode
-int ModePin = 9;
+//int ModePin = 9;
+int ButtonPin = 3;
 
 // wait this many ms after the last SI poll command before polling the USB
 uint16_t PollDelay = 5;
@@ -36,10 +41,12 @@ uint16_t PollDelay = 5;
 
 byte incomingByte = 0;
 uint32_t recvBuffer = 0;
-bool isTX = false;
+bool isTX = false; // This is set true while transmitting because the uart module doesn't want to be half duplex and claims to have received everything we send.
 bool keebMode = false; // This is true when the adapter is in keyboard mode.
+bool buttonDown = false;
 int taskTimer = 0;
 
+// Keyboard mode button states
 bool control_up = false;
 bool control_down = false;
 bool control_left = false;
@@ -72,6 +79,8 @@ byte data[8];
 byte databuf[8];
 byte keebdata[8] = {0x00, 0x80, 0x80, 0x80, 0x80, 0x80, 0x00, 0x00};
 //const byte neutral[8] = {0x00, 0x80, 0x80, 0x80, 0x80, 0x80, 0x00, 0x00};
+
+FlashStorage(my_flash_store, int);
 
 // This function intercepts key press
 void keyPressed()
@@ -647,6 +656,125 @@ void pollUSB()
   digitalWrite(DebugPin, LOW);
 }
 
+// Update RGBLED state, remember: HIGH = LED OFF, LOW = LED ON
+void updateStatusLED()
+{
+  // Disconnected
+  // ErrorConnected
+  // KeyboardConnected
+  // XBOX360Connected
+  // XBOXONEConnected
+  // PS3Connected
+  // PS4Connected
+  int t = millis();
+
+  if (t < 1000)
+  {
+    digitalWrite(LEDPinR, LOW);
+    digitalWrite(LEDPinG, LOW);
+    digitalWrite(LEDPinB, LOW);
+    return;
+  }
+  else if (t < 1500)
+  {
+    digitalWrite(LEDPinR, LOW);
+    digitalWrite(LEDPinG, HIGH);
+    digitalWrite(LEDPinB, HIGH);
+    return;  }
+  else if (t < 2000)
+  {
+    digitalWrite(LEDPinR, HIGH);
+    digitalWrite(LEDPinG, LOW);
+    digitalWrite(LEDPinB, HIGH);
+    return;  }
+  else if (t < 2500)
+  {
+    digitalWrite(LEDPinR, HIGH);
+    digitalWrite(LEDPinG, HIGH);
+    digitalWrite(LEDPinB, LOW);
+    return;  
+  }
+
+  switch (USBState)
+  {
+  case Disconnected:
+    if (millis() % 1000 < 500)
+    {
+      digitalWrite(LEDPinR, HIGH);
+      digitalWrite(LEDPinG, HIGH);
+      digitalWrite(LEDPinB, HIGH);
+    }
+    else if (keebMode)
+    {
+      digitalWrite(LEDPinR, HIGH);
+      digitalWrite(LEDPinG, HIGH);
+      digitalWrite(LEDPinB, LOW);
+    }
+    else
+    {
+      digitalWrite(LEDPinR, HIGH);
+      digitalWrite(LEDPinG, LOW);
+      digitalWrite(LEDPinB, HIGH);
+    }
+    break;
+  case ErrorConnected:
+    // Flash error light three times
+    if (t % 2000 < 1500 && t % 500 > 250)
+    {
+      digitalWrite(LEDPinR, LOW);
+      digitalWrite(LEDPinG, HIGH);
+      digitalWrite(LEDPinB, HIGH);
+    }
+    else
+    {
+      digitalWrite(LEDPinR, HIGH);
+      digitalWrite(LEDPinG, HIGH);
+      digitalWrite(LEDPinB, HIGH);
+    }
+    break;
+  case KeyboardConnected:
+    digitalWrite(LEDPinR, HIGH);
+    digitalWrite(LEDPinG, HIGH);
+    digitalWrite(LEDPinB, LOW);
+    break;
+  case XBOX360Connected:
+    digitalWrite(LEDPinR, HIGH);
+    digitalWrite(LEDPinG, LOW);
+    digitalWrite(LEDPinB, HIGH);
+    break;
+  case XBOXONEConnected:
+    digitalWrite(LEDPinR, HIGH);
+    digitalWrite(LEDPinG, LOW);
+    digitalWrite(LEDPinB, HIGH);
+    break;
+  case PS3Connected:
+    digitalWrite(LEDPinR, HIGH);
+    digitalWrite(LEDPinG, LOW);
+    digitalWrite(LEDPinB, HIGH);
+    break;
+  case PS4Connected:
+    digitalWrite(LEDPinR, HIGH);
+    digitalWrite(LEDPinG, LOW);
+    digitalWrite(LEDPinB, HIGH);
+    break;
+  default:
+    // Flash error light twice
+    if (t % 2000 < 1000 && t % 500 > 250)
+    {
+      digitalWrite(LEDPinR, LOW);
+      digitalWrite(LEDPinG, HIGH);
+      digitalWrite(LEDPinB, HIGH);
+    }
+    else
+    {
+      digitalWrite(LEDPinR, HIGH);
+      digitalWrite(LEDPinG, HIGH);
+      digitalWrite(LEDPinB, HIGH);
+    }
+    break;
+  }
+}
+
 void SISendByte(byte toSend)
 {
   for (int i = 6; i >= 0; i -= 2)
@@ -674,7 +802,11 @@ void setup()
 
   pinMode(LEDPin, OUTPUT);
   pinMode(DebugPin, OUTPUT);
-  pinMode(ModePin, INPUT);
+  pinMode(LEDPinR, OUTPUT);
+  pinMode(LEDPinG, OUTPUT);
+  pinMode(LEDPinB, OUTPUT);
+  pinMode(ButtonPin, INPUT_PULLUP);
+  // pinMode(ModePin, INPUT);
 
   if (UsbH.Init())
   {
@@ -774,6 +906,15 @@ void loop()
   if (mil > lastPoll + PollDelay)
   {
     pollUSB();
+
+    // bool buttonRead = digitalRead(ButtonPin);
+    // if (buttonRead && !buttonDown && USBState == Disconnected)
+    // {
+    //   keebMode = !keebMode;
+    // }
+
+    updateStatusLED();
+
     lastPoll = millis();
   }
 }
